@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/profile.css">
+    <title th:text="${pageTitle}"></title>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" th:href="@{/}">AquaFun</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/}">Accueil<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" sec:authorize="isFullyAuthenticated()">
+                <a class="nav-link"  th:href="@{/cours/afficherCours}">Voir nos cours</a>
+            </li>
+        </ul>
+        <form sec:authorize="!isFullyAuthenticated()" class="form-inline my-2 my-lg-0">
+            <a th:href="@{/login}" class="btn btn-outline-primary mr-2 my-2 my-sm-0">Connexion</a>
+            <a th:href="@{/signup}" class="btn btn-success my-2 my-sm-0">Inscription</a>
+        </form>
+        <form sec:authorize="isFullyAuthenticated()" class="form-inline my-2 my-lg-0">
+            <a class="btn btn-outline-light mr-2 my-2 my-sm-0" th:href="@{/user/account}" th:text="${#authentication.getPrincipal().getFirstName()+' '+#authentication.getPrincipal().getLastName()}"></a>
+            <a th:href="@{/logout}" class="btn btn-outline-danger my-2 my-sm-0">Déconnexion</a>
+        </form>
+    </div>
+</nav>
+<div class="space" style="height:50px;font-size: 0;line-height: 0">
+</div>
+
+<div class="container">
+    <div class="row gutters-sm">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        <img th:src="@{https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png}" alt="userAvatar" class="rounded-circle" width="150">
+                        <div class="mt-3">
+                            <h4 th:text="${#authentication.getPrincipal().getFirstName() + '  ' + #authentication.getPrincipal().getLastName()}"></h4>
+                            <p class="text-muted font-size-sm" th:text="${#authentication.getPrincipal().getTownName()}"></p>
+                            <a class="btn btn-primary" th:href="@{/cours/afficherCours}">S'inscrire à un cours</a>
+                            <a class="btn btn-outline-primary" th:with="i=${#authentication.getPrincipal().getUserId()}" th:href="@{/user/account}">Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Nom Complet</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary" th:text="${#authentication.getPrincipal().getFirstName() + '  ' + #authentication.getPrincipal().getLastName()}">
+
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Adresse Courriel</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary" th:text="${#authentication.getPrincipal().getUsername()}">
+
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Téléphone</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary" th:text="${#authentication.getPrincipal().getPhoneNumber()}">
+
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Adresse</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary" th:text="${#authentication.getPrincipal().getStreetNumber()+' '+#authentication.getPrincipal().getStreetName()+', '+#authentication.getPrincipal().getTownName()+'. '+#authentication.getPrincipal().getPostalCode()}">
+
+                        </div>
+                    </div>
+                    <!--
+                    <div class="col-sm-9 text-secondary">
+
+                    </div>
+                </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="space" style="height:50px;font-size: 0;line-height: 0">
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4 th:text="${'Nombre de cours en cours:  ' + nbrOfCoursCurrent}"></h4>
+        </div>
+    </div>
+    <div class="space" style="height:50px;font-size: 0;line-height: 0"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th> <th scope="col">Prix</th><th scope="col">Niveau</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="table-info" th:each="c:${listOfCoursCurrent}">
+                        <td th:text="${c.id}"></td>
+                        <td th:text="${'$'+c.price}"></td>
+                        <td th:text="${c.niveau}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+    <div class="space" style="height:50px;font-size: 0;line-height: 0"></div>
+    <div class="space" style="height:50px;font-size: 0;line-height: 0"></div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4 th:text="${'Nombre de cours pris:  ' + nbrOfCoursFait}"></h4>
+        </div>
+    </div>
+    <div class="space" style="height:50px;font-size: 0;line-height: 0"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th> <th scope="col">Prix</th> <th scope="col">Niveau</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="table-warning" th:each="c:${listOfCoursFait}">
+                    <td th:text="${c.id}"></td>
+                    <td th:text="${'$'+c.price}"></td>
+                    <td th:text="${c.niveau}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
