@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/profile.css">
+    <title th:text="${pageTitle}"></title>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" th:href="@{/}">AquaFun</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <!--<li class="nav-item active">
+                <a class="nav-link" th:href="@{/}">Accueil<span class="sr-only">(current)</span></a>
+            </li>-->
+        </ul>
+        <form sec:authorize="!isFullyAuthenticated()" class="form-inline my-2 my-lg-0">
+            <a th:href="@{/login}" class="btn btn-outline-primary mr-2 my-2 my-sm-0">Connexion</a>
+            <a th:href="@{/signup}" class="btn btn-success my-2 my-sm-0">Inscription</a>
+        </form>
+
+        <form sec:authorize="isFullyAuthenticated()" class="form-inline my-2 my-lg-0">
+            <a class="btn btn-outline-light mr-2 my-2 my-sm-0" th:href="@{/admin/account}" th:text="${#authentication.getPrincipal().getFirstName()+' '+#authentication.getPrincipal().getLastName()}"></a>
+            <a th:href="@{/logout}" class="btn btn-outline-danger my-2 my-sm-0">Deconnexion</a>
+        </form>
+    </div>
+</nav>
+<div class="space" style="height:50px;font-size: 0;line-height: 0"></div>
+<div class="text-center">
+    <h2 class="text-danger" th:text="${errMessage}">
+    </h2>
+</div>
+
+<div class="container">
+    <div class="row" style="margin-top: 150px">
+        <div class="col-md-6 offset-md-3" >
+            <div class="card">
+                <article class="card-body">
+                    <h3 class="card-title text-center mb-4 mt-1">Ajouter un cours</h3>
+                    <hr>
+
+                    <form form class="form" th:action="@{/admin/cours/addCours/process}" method="get">
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="far fa-calendar-check"></i> </span>
+                            </div>
+                            <select class="form-control" name="niveau"  required>
+                                <option selected value="0">Choisir le niveau de votre choix</option>
+                                <option value="ETOILE_DE_MER">ETOILE DE MER</option>
+                                <option value="BAMBINS">BAMBINS</option>
+                                <option value="TORTUES">TORTUES</option>
+                                <option value="PINGOUINS">PINGOUINS</option>
+                                <option value="SALAMANDRE">SALAMANDRE</option>
+                                <option value="BALEINES">BALEINES</option>
+                                <option value="GRENOUILLES">GRENOUILLES</option>
+                                <option value="DAUPHINS">DAUPHINS</option>
+                                <option value="JUNIOR_1">JUNIOR 1</option>
+                                <option value="JUNIOR_2">JUNIOR 2</option>
+                                <option value="JUNIOR_3">JUNIOR 3</option>
+                                <option value="JUNIOR_4">JUNIOR 4</option>
+                                <option value="JUNIOR_5">JUNIOR 5</option>
+                                <option value="MAITRE_NAGEUR">MAITRE NAGEUR</option>
+                            </select>
+                        </div> <!-- form-group end.// -->
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="far fa-calendar-check"></i> </span>
+                            </div>
+                            <select class="form-control" name="startHour"  required>
+                                <option selected value="0">Choisir l'heure du debut du cours</option>
+                                <option value="8">08h00</option>
+                                <option value="9">09h00</option>
+                                <option value="10">10h00</option>
+                                <option value="11">11h00</option>
+                                <option value="12">12h00</option>
+                                <option value="13">13h00</option>
+                                <option value="14">14h00</option>
+                                <option value="15">15h00</option>
+                                <option value="16">16h00</option>
+                                <option value="17">17h00</option>
+                                <option value="18">18h00</option>
+                                <option value="19">19h00</option>
+                                <option value="20">20h00</option>
+                            </select>
+                        </div> <!-- form-group end.// -->
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="far fa-calendar-check"></i> </span>
+                            </div>
+                            <select class="form-control" name="endHour"  required>
+                                <option selected value="0">Choisir l'heure de fin du cours</option>
+                                <option value="10">10h00</option>
+                                <option value="11">11h00</option>
+                                <option value="12">12h00</option>
+                                <option value="13">13h00</option>
+                                <option value="14">14h00</option>
+                                <option value="15">15h00</option>
+                                <option value="16">16h00</option>
+                                <option value="17">17h00</option>
+                                <option value="18">18h00</option>
+                                <option value="19">19h00</option>
+                                <option value="20">20h00</option>
+                                <option value="21">21h00</option>
+                                <option value="22">22h00</option>
+                            </select>
+                        </div> <!-- form-group end.// -->
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="far fa-calendar-check"></i> </span>
+                            </div>
+                            <select class="form-control" name="daySchedule"  required>
+                                <option selected value="0">Choisir la journée du cours</option>
+                                <option value="LUNDI">LUNDI</option>
+                                <option value="MARDI">MARDI</option>
+                                <option value="MERCREDI">MERCREDI</option>
+                                <option value="JEUDI">JEUDI</option>
+                                <option value="VENDREDI">VENDREDI</option>
+                                <option value="SAMEDI">SAMEDI</option>
+                                <option value="DIMANCHE">DIMANCHE</option>
+
+                            </select>
+                        </div> <!-- form-group end.// -->
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="far fa-calendar-check"></i> </span>
+                            </div>
+                            <select class="form-control" name="saison"  required>
+                                <option selected value="0">Choisir la saison d'attribution</option>
+                                <option value="HIVER">Hiver</option>
+                                <option value="PRINTEMPS">Printemps</option>
+                                <option value="ETE">Ete</option>
+                                <option value="AUTOMNE">Automne</option>
+                            </select>
+                        </div> <!-- form-group end.// -->
+
+                        <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="far fa-calendar-check"></i> </span>
+                        </div>
+                        <select class="form-control" name="annee"  required>
+                            <option selected value="0">Choisir l'année d'attribution du cours</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+
+                        </select>
+                    </div> <!-- form-group end.// -->
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input type="number" class="form-control" placeholder="Nombre maximum de place" name="capacity" required />
+                        </div> <!-- form-group// -->
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Prix du cours, n'oubliez pas la virgule" name="price" required />
+                        </div> <!-- form-group// -->
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <textarea class="form-control" placeholder="Description du cours" name="description" rows="3" required></textarea>
+                        </div> <!-- form-group// -->
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Ajouter</button>
+                        </div> <!-- form-group// -->
+                    </form>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

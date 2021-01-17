@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <title th:text="${pageTitle}"></title>
+
+  <style>
+
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.portfolio-item {
+  margin-bottom: 30px;
+}
+  </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" th:href="@{/}">AquaFun</a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/}">Accueil<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@{/cours/afficherCours}">Voir nos cours</a>
+                </li>
+            </ul>
+            <form sec:authorize="!isFullyAuthenticated()" class="form-inline my-2 my-lg-0">
+                <a th:href="@{/login}" class="btn btn-outline-primary mr-2 my-2 my-sm-0">Connexion</a>
+                <a th:href="@{/signup}" class="btn btn-success my-2 my-sm-0">Inscription</a>
+            </form>
+            <form sec:authorize="isFullyAuthenticated()" class="form-inline my-2 my-lg-0">
+                <a th:href="@{/logout}" class="btn btn-outline-danger my-2 my-sm-0">Deconnexion</a>
+            </form>
+        </div>
+    </nav>
+    <header>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <!-- Slide 1  -->
+                <div class="carousel-item active" style="background-image: url('/images/canva-photo-editor.png')">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Activités aquatiques</h3>
+                        <p>N'attendez plus, venez vous former avec les plus grands chez AquaFun</p>
+                        <a th:href="@{/afficherCours}" class="btn btn-lg btn-light">Voir nos cours</a>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="carousel-item" style="background-image: url('/images/canva-photo-editor2.png')">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Créer votre compte maintenant</h3>
+                        <p>Venez voir les promotions actuelles qu'AquaFun vous offre</p>
+                        <a th:href="@{/signup}" class="btn btn-lg btn-danger">Inscrivez vous</a>
+                    </div>
+                </div>
+                <!-- Slide 3-->
+                <div class="carousel-item" style="background-image: url('/images/canva-photo-editor3.png')">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Prendre un cours</h3>
+                        <p>On a ajouté des niveaux supplémentaires afin de vous former davantage</p>
+                        <a th:href="@{/login}" class="btn btn-lg btn-success">S'inscrire</a>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </header>
+    <div class="space" style="height:50px;font-size: 0;line-height: 0"></div>
+    <div class="space" style="height:50px;font-size: 0;line-height: 0"></div>
+
+
+    <!-- Page Content -->
+    <div class="container">
+        <!-- Features Section -->
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>Club de formation en natation</h2>
+                <p>AquaFun est un centre de formation moderne équipé de :</p>
+                <ul>
+                    <li>
+                        <strong>Piscine pro 20m X 25m</strong>
+                    </li>
+                    <li>
+                        <strong>34 instructeurs professionnels</strong>
+                    </li>
+                    <li>
+                        <strong>Casiers et douches modernes</strong>
+                    </li>
+                    <li>
+                        <strong>réseaux national de compétitions de toute âge</strong>
+                    </li>
+                    <li>
+                        <strong>Stationnement gratuit pour les clients</strong>
+                    </li>
+
+                </ul>
+                <p>
+                    AquaFun offre l'un des plus larges éventails de cours de natation et d'activités aquatiques au Québec, adaptés à tous les besoins et à tous les types de nageurs.
+                    Structuré selon l'âge et le niveau des nageurs, les cours sont issus du programme aquatique national d'AquaFun, qui demeure l'un des leaders au Canada en matière d'enseignement de la natation et de la sécurité aquatique depuis 1931.
+                </p>
+                <p>
+                    <strong>Adresse : 659 rue Du Coude, Montréal. H1X2T3 </strong>
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <img class="img-fluid rounded" src="/images/map-fun.jpg" alt="map fun aquafun">
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+    </div>
+    <!-- /.container -->
+
+</body>
+</html>

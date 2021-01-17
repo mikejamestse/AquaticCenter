@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" th:href="@{/}">AquaFun</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/}">Accueil<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" sec:authorize="isFullyAuthenticated()">
+                <a class="nav-link" href="@{/cours/afficherCours}">Voir nos cours</a>
+            </li>
+        </ul>
+        <form sec:authorize="!isFullyAuthenticated()" class="form-inline my-2 my-lg-0">
+            <a th:href="@{/login}" class="btn btn-outline-primary mr-2 my-2 my-sm-0">Connexion</a>
+            <a th:href="@{/signup}" class="btn btn-success my-2 my-sm-0">Inscription</a>
+        </form>
+        <form sec:authorize="isFullyAuthenticated()" class="form-inline my-2 my-lg-0">
+            <a th:href="@{/logout}" class="btn btn-outline-danger my-2 my-sm-0">Déconnexion</a>
+        </form>
+    </div>
+</nav>
+        <div class="jumbotron text-center ">
+            <h4>Creer votre compte</h4>
+            <p>C'est gratuit</p>
+            <h4 class="text-center text-danger" th:text="${errMessage}"></h4>
+        </div>
+
+        <div class="container" >
+            <form class="form" th:action="@{/signup/addUser}" method="POST" th:object="${User}" >
+                <div class="row">
+                    <div class="col-md-6" >
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Prenom" name="firstname" th:field="*{firstName}"  required />
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Nom de famille" name="lastName" th:field="*{lastName}"  required />
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                            </div>
+                            <input class="form-control" placeholder="Adresse courriel" type="email" name="username" th:field="*{username}" required/>
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                            </div>
+                            <input name="phoneNmuber" class="form-control" placeholder="format 123-456-7890" type="tel" th:field="*{phoneNumber}"
+                                   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fas fa-road"></i> </span>
+                            </div>
+                            <input name="streetNumber" class="form-control" placeholder="Votre numero de rue" type="text" th:field="*{streetNumber}" required />
+                        </div> <!-- form-group// -->
+                    </div>
+                    <div class="col-md-6" >
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fas fa-road"></i> </span>
+                            </div>
+
+                            <input name="streetName" class="form-control" placeholder="Nom de rue" type="text" th:field="*{streetName}" required>
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fas fa-road"></i> </span>
+                            </div>
+
+                            <input name="postalCode" class="form-control" placeholder="Code postal" type="text" th:field="*{postalCode}" required>
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                            </div>
+                            <select class="form-control" name="townName" th:field="*{townName}" required>
+                                <option selected="" value="">Choisir la ville la plus proche</option>
+                                <option value="Montreal">Montreal</option>
+                                <option value="Brossard">Brossard</option>
+                                <option value="Laval">Laval</option>
+                                <option value="Gatineau">Gatineau</option>
+                            </select>
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input name = "password" class="form-control" placeholder="Mot de passe" type="password" required>
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input class="form-control" placeholder="Confirmer votre mot de passe" type="password" required>
+                        </div> <!-- form-group// -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3" >
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"> Créer mon compte  </button>
+                        </div> <!-- form-group// -->
+                        <p class="text-center">Vous possédez un compte? <a th:href="@{/login}">Connexion</a> </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+</body>
+</html>
